@@ -1,0 +1,687 @@
+-- 🔨 = work in progress and to be improved
+-- i believe certain people may be skidding my work uwu
+-- fukck you smhaaa
+-- IF you are a new dev do not paste my work and make ur own script but u can use it for personal thing (TO SMHAAA!
+-- discord: https://discord.gg/hFCsjYRVJ4
+
+local library, flags = loadstring(game:HttpGet('https://pastebin.com/raw/UD6J9MqK'))();
+local gui = library;
+local empt = function() end
+
+local services = getfenv()['setmetatable']({}, {
+    ['__index'] = function(table, value)
+        local service = game:GetService(tostring(value))
+        if cloneref then -- might be a shit exp 😭
+            return cloneref(service)
+        else
+            return service
+        end
+    end
+})
+--[[
+    {
+      Ability Wars -> 8260276694
+      More Game Coming Soon -> 000000001
+    }
+]]
+if game.PlaceId == 8260276694 then
+    local modlist = {
+        1756212802,
+        4393226871,
+        374663048,
+        472468023,
+        355408714,
+        792324784,
+        368943249,
+        169175274,
+        597766981,
+        51266516,
+        75237783,
+        1168192062,
+        134725061,
+        3233825722,
+        479724701,
+        157508986,
+        533784762,
+        110439399,
+    }
+
+    local functions = {
+        Characters = {};
+        Other = {};
+    }
+    function functions.Other:Magnitude(pos1, pos2)
+        return (pos1 - pos2).Magnitude
+    end
+    function functions.Other:Magnitude_Y(pos1, pos2)
+        return (pos1 * Vector3.new(0, 1, 0) - pos2 * Vector3.new(0, 1, 0)).Magnitude
+    end
+    function functions.Other:Magnitude_XZ(pos1, pos2)
+        return (pos1 * Vector3.new(1, 0, 1) - pos2 * Vector3.new(1, 0, 1)).Magnitude
+    end
+    function functions.Other:Mouse1Press()
+        if services['UserInputService']:GetFocusedTextBox() ~= nil then return end
+
+        services['VirtualInputManager']:SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, true, nil, 0)
+        services['VirtualInputManager']:SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, false, nil, 0)
+    end
+    function functions.Other:SendNotification(title, text, duration)
+        services['StarterGui']:SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = duration
+        })
+    end
+    function functions.Other:FindUser(sh)
+        for i, v in services['Players']:GetPlayers() do
+            if v.Name:lower():find(sh) then
+                return v
+            else
+                if v.DisplayName:lower():find(sh) then
+                    return v
+                end
+            end
+        end
+    end
+    function functions.Characters:IsAlive(who)
+        return (who and who.Character
+            and who.Character:FindFirstChild('HumanoidRootPart')
+            and who.Character:FindFirstChildOfClass('Humanoid')
+            and who.Character:FindFirstChildOfClass('Humanoid').Health > 0
+        ) or false
+        -- meet all those? he is alive and well 😎
+    end
+
+    function functions.Characters:GetEntitys(distance)
+        ents = {};
+        for _, p in next, services['Players']:GetPlayers() do
+            if not functions.Characters:IsAlive(p) then continue end
+            if p:FindFirstChild('Butter') or (p:FindFirstChild('leaderstats') and p:FindFirstChild('leaderstats'):FindFirstChild('Ability') and p:FindFirstChild('leaderstats'):FindFirstChild('Ability').Value == 'Spectator') then continue end
+            if functions.Other:Magnitude(services['Players'].LocalPlayer.Character.HumanoidRootPart.Position, p.Character.HumanoidRootPart.Position) <= distance and p ~= services['Players'].LocalPlayer then
+                table.insert(ents, p.Character)
+            end
+        end
+        if #ents > 0 then
+            return (ents)
+        else
+            return (nil)
+        end
+    end
+
+    function functions.Characters:GetNearEntity(opt_dist)
+        return (functions.Characters:GetEntitys(opt_dist or flags['pvpsettings/rtreshold']) or {})[1]
+    end
+
+    function functions.Characters:ExtendHitbox(p)
+        repeat wait() until p.Character and p.Character.PrimaryPart
+        p.Character.HumanoidRootPart.Size = Vector3.new(flags['advantages/extender/amn'], flags['advantages/extender/amn'], flags['advantages/extender/amn'])
+    end
+    functions.Other:SendNotification("discord new", "https://discord.gg/hFCsjYRVJ4", 20)
+    local MainWindow = library:CreateWindow({
+        Name = "Komaru Hub",
+        Themeable = {
+            Info = "Made by altered/apnff0x"
+        }
+    })
+    local GeneralTab = MainWindow:CreateTab({
+        Name = "General"
+    })
+    local MovementTab = MainWindow:CreateTab({
+        Name = "Movement"
+    })
+    local ItemsTab = MainWindow:CreateTab({
+        Name = "Items"
+    })
+
+    local CombatSection = GeneralTab:CreateSection({
+        Name = "Combat"
+    })
+    local AdvantagesSection = GeneralTab:CreateSection({
+        Name = "Advantages"
+    })
+    local TPSection = GeneralTab:CreateSection({
+        Name = "Teleport",
+        Side = "Right"
+    })
+    local AntiAbSection = GeneralTab:CreateSection({
+        Name = "Ability",
+        Side = "Right"
+    })
+    local PVPSSection = GeneralTab:CreateSection({
+        Name = "Settings",
+    })
+
+    punchaura = CombatSection:AddToggle({
+        Name = "Punch Aura",
+        Flag = "combat/punchaura",
+        Keybind = 1,
+        Callback = empt
+    })
+
+    local AntiVoidRGB = Color3.fromRGB(255, 0, 0)
+    local AntiVoidMaterial = Enum.Material['Glass']
+    CombatSection:AddToggle({
+        Name = "Void Walk",
+        Flag = "combat/antivoid",
+        Keybind = 1,
+        Callback = function(state)
+            if state then
+                local AntiVoidPart = Instance.new("Part")
+                AntiVoidPart.Size = Vector3.new(10000, 20, 10000)
+                AntiVoidPart.Position = Vector3.new(156, 0, 31)
+                AntiVoidPart.Material = AntiVoidMaterial
+                AntiVoidPart.CanCollide = true
+                AntiVoidPart.Anchored = true
+                AntiVoidPart.Color =  AntiVoidRGB -- pure red because i see red when im angry :imp:
+                AntiVoidPart.CastShadow = false
+                AntiVoidPart.Parent = workspace
+                AntiVoidPart.Transparency = 0.3
+                AntiVoidPart.Name = 'AntiVoidPart'
+            else
+                workspace.AntiVoidPart:Destroy()
+            end
+        end
+    })
+
+    tarstrafe = CombatSection:AddToggle({
+        Name = "Target Strafe",
+        Flag = "combat/targetstrafe",
+        Callback = empt
+    })
+
+    autoresp = CombatSection:AddToggle({
+        Name = "Auto Respawn",
+        Flag = "combat/autorespawn",
+        Callback = empt
+    })
+
+    CombatSection:AddToggle({
+        Name = "No Ragdoll",
+        Flag = "combat/norag",
+        Callback = empt
+    })
+
+    escapedim = CombatSection:AddToggle({
+        Name = "Escape Dimensions",
+        Flag = "combat/escape",
+        Callback = empt
+    })
+
+    jumpinpvp = CombatSection:AddToggle({
+        Name = "Jump In PVP",
+        Flag = "combat/jumpinpvp",
+        Callback = empt
+    })
+
+    CombatSection:AddToggle({
+        Name = "View Targets",
+        Flag = "combat/viewtargets",
+        Callback = empt
+    })
+
+    CombatSection:AddToggle({
+        Name = "Comat Bot 🔨",
+        Flag = "combat/bot",
+        Keybind = 1,
+        Callback = function(state)
+            if state then
+                autoresp:Set(true)
+                jumpinpvp:Set(true)
+                escapedim:Set(true)
+                punchaura:Set(true)
+                tarstrafe:Set(false)
+            end
+        end
+    })
+
+    local real
+    local spectating = false
+    TPSection:AddTextbox({
+        Name = "Enter Username [can be short]",
+        Flag = "tpsection/username",
+        PlaceHolder = "",
+        Value = "",
+        Callback = function(text)
+            real = functions.Other:FindUser(text)
+            if real then
+                functions.Other:SendNotification('Is this correct?', real.Name, 5)
+            else
+                functions.Other:SendNotification('Unable to find that player', '', 5)
+            end
+
+        end
+    })
+
+    TPSection:AddButton({
+        Name = "Teleport To",
+        Callback = function()
+            if functions.Characters:IsAlive(services['Players'].LocalPlayer) and real then
+                services['Players'].LocalPlayer.Character.HumanoidRootPart.CFrame = real.Character.HumanoidRootPart.CFrame
+            end
+        end
+    })
+
+    spect = TPSection:AddToggle({
+        Name = "Spectate",
+        Flag = "tpsection/spectate",
+        Callback = function(state)
+            if state and real then
+                workspace.CurrentCamera.CameraSubject = real.Character
+            elseif (not state or not real) then
+                if functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                    workspace.CurrentCamera.CameraSubject = services['Players'].LocalPlayer.Character
+                end
+            end
+        end
+    })
+
+    PVPSSection:AddSlider({
+        Name = "Range Treshold",
+        Flag = "pvpsettings/rtreshold",
+        Value = 5,
+        Precise = 1,
+        Min = 5,
+        Max = 20 -- 11 got me banned, so thats not safe fs
+    })
+
+    PVPSSection:AddSlider({
+        Name = "Strafe Distance",
+        Flag = "pvpsettings/strafedist",
+        Value = 5,
+        Precise = 1,
+        Min = 5,
+        Max = 20 -- 11 got me banned, so thats not safe fs
+    })
+
+    PVPSSection:AddDropdown({
+        Name = "Aura Method",
+        Flag = "pvpsettings/auramethod",
+        Callback = function(x)
+            if x == 'Remote' then
+                functions.Other:SendNotification('Are you sure', 'Hey thats option is very risky to use might get you banned', 5)
+            end
+        end,
+        List = {"Legit", "Remote"}
+    })
+
+    PVPSSection:AddToggle({
+        Name = "Avoid Uno",
+        Flag = "pvpsettings/nouno",
+        Callback = empt,
+        Value = true
+    })
+
+    local c = false
+    local staffdetector
+    staffdetector = PVPSSection:AddToggle({
+        Name = "Staff Detector",
+        Flag = "pvpsettings/staff",
+        Callback = function(state)
+            if not state and not c then
+                staffdetector.Set(true)
+                c = true
+                functions.Other:SendNotification("are you sure?", "This feature is set by default to prevent bans, click again to confirm")
+            end
+        end,
+        Value = true
+    })
+
+    PVPSSection:AddColorpicker({
+        Name = "Anti Void RGB",
+        Flag = "combat/antivoid/rgb",
+        Callback = function(nRgb, oRgb)
+            AntiVoidRGB = nRgb
+            if workspace:FindFirstChild('AntiVoidPart') then
+                workspace.AntiVoidPart.Color =  AntiVoidRGB
+            end
+        end
+    })  
+
+    local mats = {}
+    for i, v in next, Enum.Material:GetEnumItems() do
+        table.insert(mats, tostring(v):match("Enum\.Material\.(%w+)")) -- love vs code for erroring this
+    end
+    PVPSSection:AddSearchBox({
+        Name = "Anti Void Material",
+        Flag = "combat/antivoid/material",
+        Callback = function(nMat)
+            AntiVoidMaterial = nMat
+            if workspace:FindFirstChild('AntiVoidPart') then
+                workspace.AntiVoidPart.Material = Enum.Material[AntiVoidMaterial]
+            end
+        end,
+        List = mats
+    })
+
+    local HitboxConnections = {
+        Char = {};
+        Pys = nil;
+    }
+    local ExtenderR = AdvantagesSection:AddToggle({
+        Name = "Hitbox Extender",
+        Flag = "advantages/extender",
+        Callback = function(state)
+            if state then
+                for _, p in next, services['Players']:GetPlayers() do
+                    if p == services['Players'].LocalPlayer then continue end
+                    functions.Characters:ExtendHitbox(p)
+                    HitboxConnections.Char[p] = p.CharacterAdded:Connect(function()
+                        wait(1)
+                        functions.Characters:ExtendHitbox(p)
+                    end)
+                end
+                HitboxConnections.Pys = services['Players'].PlayerAdded:Connect(function(v)
+                    functions.Characters:ExtendHitbox(v)
+                    HitboxConnections.Char[v] = v.CharacterAdded:Connect(function()
+                        wait(1)
+                        functions.Characters:ExtendHitbox(v)
+                    end)
+                end)
+            else
+                if HitboxConnections.Pys then
+                    HitboxConnections.Pys:Disconnect()
+                end
+                for _, v in next, HitboxConnections.Char do
+                    v:Disconnect()
+                    v = nil
+                end
+                for _, p in next, services['Players']:GetPlayers() do
+                    if p == services['Players'].LocalPlayer then continue end
+                    if functions.Characters:IsAlive(p) then
+                        p.Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+                    end
+                end
+            end
+        end
+    })
+    AdvantagesSection:AddSlider({
+        Name = "Extend",
+        Flag = "advantages/extender/amn",
+        Value = 5,
+        Precise = 1,
+        Min = 5,
+        Max = 20,
+        Callback = function()
+            if flags['advantages/extender'] then
+                ExtenderR:Set(false)
+                ExtenderR:Set(true)
+            end
+        end
+    })
+
+    AntiAbSection:AddToggle({
+        Name = "Anti Portal",
+        Flag = "antiab/portal",
+        Callback = empt
+    })
+    AntiAbSection:AddToggle({
+        Name = "Anti Barrier [w.i.p]",
+        Flag = "antiab/barrier",
+        Callback = empt
+    })
+    AntiAbSection:AddToggle({
+        Name = "Anti Gravity [w.i.p]",
+        Flag = "antiab/gravity",
+        Callback = empt
+    })
+    AntiAbSection:AddToggle({
+        Name = "Reset when hivemind [w.i.p]",
+        Flag = "antiab/hivemind",
+        Callback = empt
+    })
+
+    local MovementSection = MovementTab:CreateSection({
+        Name = "Mods"
+    })
+
+    MovementSection:AddToggle({
+        Name = "Enable WalkSpeed",
+        Flag = "movement/ws",
+        Callback = empt
+    })
+    MovementSection:AddToggle({
+        Name = "Enable JumpPower",
+        Flag = "movement/jp",
+        Callback = empt
+    })
+    MovementSection:AddSlider({
+        Name = "WalkSpeed",
+        Flag = "movement/wsnumber",
+        Value = 16,
+        Min = 16,
+        Max = 150
+    })
+    MovementSection:AddSlider({
+        Name = "JumpPower",
+        Flag = "movement/jpnumber",
+        Value = 50,
+        Min = 50,
+        Max = 300
+    })
+    MovementSection:AddSlider({
+        Name = "Gravity",
+        Flag = "movement/gravity",
+        Value = 196.2,
+        Precise = 1,
+        Min = 0,
+        Max = 196.2,
+        Callback = function (s)
+            workspace.Gravity = s
+        end
+    })
+
+    local ItemsSection = ItemsTab:CreateSection({
+        Name = "Items"
+    })
+
+    for i, v in next, workspace["Map Items"]:GetChildren() do
+        ItemsSection:AddButton({
+            Name = "Get ".. v.Name,
+            Callback = function()
+                if v.Name == 'Pizza' then
+                    firetouchinterest(services['Players'].LocalPlayer.Character.HumanoidRootPart, v['Pizza Hitbox'], 1)
+                    return
+                end
+                firetouchinterest(services['Players'].LocalPlayer.Character.HumanoidRootPart, v, 1)
+            end
+        })
+    end
+
+    -- // loops
+    spawn(function() -- punchaura
+        while true do
+            if flags['combat/punchaura'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                treshd = flags['pvpsettings/rtreshold']
+                chars = functions.Characters:GetEntitys(treshd) or {}
+                for _, c in ipairs(chars) do
+                    if (c['Right Arm']:FindFirstChildOfClass('SelectionBox')) and (flags['pvpsettings/nouno']) then continue end
+                    if flags['pvpsettings/auramethod'] == 'Remote' then
+                        services['ReplicatedStorage']['Remote Events'].Punch:FireServer(c) -- detected, thats your warning.
+                    else
+                        functions.Other:Mouse1Press();
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while true do
+            if flags['combat/jumpinpvp'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) and functions.Characters:GetEntitys(flags['pvpsettings/rtreshold']) then
+                if services['Players'].LocalPlayer.Character.Humanoid.FloorMaterial ~= Enum.Material.Air then
+                    services['Players'].LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function() -- view targets
+        while true do
+            char = functions.Characters:GetNearEntity()
+            if flags['combat/viewtargets'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) and char then
+                workspace.CurrentCamera.CameraSubject = char
+                spect:Set(false)
+            else
+                if not flags['tpsection/spectate'] then
+                    workspace.CurrentCamera.CameraSubject = services['Players'].LocalPlayer.Character
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function() -- anti ab's
+        --  hivemind is broken idk why
+        hivemind = {
+            "81487710",
+            "82907945",
+            "81487640",
+            "82907977",
+            "82908019"
+        } -- hivemind mesh ids
+        portalsalreadydone = {}
+        while true do
+            if functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                if flags['antiab/hivemind'] then
+                    if services['Players'].LocalPlayer.Character:FindFirstChild('CharacterMesh') and table.find(hivemind, tostring(services['Players'].LocalPlayer.Character:FindFirstChild('CharacterMesh').MeshId)) then
+                        services['Players'].LocalPlayer.Character:BreakJoints()
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function() -- targetstrafe
+        ang = 0
+        services['RunService'].RenderStepped:Connect(function (dt)
+            if flags['combat/targetstrafe'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                char = functions.Characters:GetNearEntity()
+                parms = RaycastParams.new()
+                parms.FilterDescendantsInstances = {char, services['Players'].LocalPlayer.Character, workspace:FindFirstChild('AntiVoidPart')} -- we are checking if the guy is over the void, we dont want that
+                parms.FilterType = Enum.RaycastFilterType.Blacklist
+                Raycast = workspace:Raycast(char.HumanoidRootPart.Position, Vector3.new(0, -2000, 0), parms)
+                if char and functions.Characters:IsAlive(services['Players']:GetPlayerFromCharacter(char)) and workspace:Raycast(char.HumanoidRootPart.Position, Vector3.new(0, -2000, 0), parms) ~= nil then
+                    if char['Right Arm']:FindFirstChildOfClass('SelectionBox') and flags['pvpsettings/nouno'] then return end
+                    ang = ang + 16 * dt
+                    local x = char.HumanoidRootPart.Position.X + math.cos(ang) * flags['pvpsettings/strafedist']
+                    local z = char.HumanoidRootPart.Position.Z + math.sin(ang) * flags['pvpsettings/strafedist']
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(x, char.HumanoidRootPart.Position.Y, z))
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.zero
+                    if ang >= math.pi * 2 then
+                        ang = ang - math.pi * 2
+                    end
+                end
+            end
+        end)
+    end)
+
+    spawn(function() -- combot
+        while true do
+            if flags['combat/bot'] then
+                -- these are required for combot, they will enable automatically
+                autoresp:Set(true)
+                jumpinpvp:Set(true)
+                escapedim:Set(true)
+                punchaura:Set(true)
+                tarstrafe:Set(false)
+            end
+
+            if functions.Characters:IsAlive(services['Players'].LocalPlayer) and flags['combat/bot'] then
+                charx = functions.Characters:GetNearEntity(200)
+                if charx and charx.PrimaryPart then
+                    if not ((charx['Right Arm']:FindFirstChildOfClass('SelectionBox')) and (flags['pvpsettings/nouno'])) then
+                        services['Players'].LocalPlayer.Character.Humanoid:MoveTo(charx.HumanoidRootPart.Position)
+                        services['Players'].LocalPlayer.Character.Humanoid.Jump = true
+                    end
+                end
+            end
+            wait(0.2)
+        end
+    end)
+
+    spawn(function() -- no rag
+        while true do
+            if flags['combat/norag'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                if services['Players'].LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.PlatformStanding then
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.Anchored = true
+                else
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.Anchored = false
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function() -- escape dimensions
+        -- blood dimension kills you as the damage is handled with magnitude
+        pos = Vector3.new(8, 19, -4)
+        while true do
+            if flags['combat/escape'] and functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                if functions.Other:Magnitude(services['Players'].LocalPlayer.Character.HumanoidRootPart.Position, pos) >= 600 then
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos.X, pos.Y, pos.Z)
+                    services['Players'].LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.zero
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function() -- speed/jp
+        while true do
+            if functions.Characters:IsAlive(services['Players'].LocalPlayer) then
+                if flags['movement/ws'] then
+                    services['Players'].LocalPlayer.Character.Humanoid.WalkSpeed = flags['movement/wsnumber']
+                end
+                if flags['movement/jp'] then
+                    services['Players'].LocalPlayer.Character.Humanoid.JumpPower = flags['movement/jpnumber']
+                end
+            end
+            wait()
+        end
+    end)
+
+    -- // Connections
+    local ping, ogCFrame
+    local function whenyoudie()
+        services['Players'].LocalPlayer.Character.Humanoid.Died:Connect(function()
+            ogCFrame = services['Players'].LocalPlayer.Character.HumanoidRootPart.CFrame
+        end)
+    end
+    services['Players'].LocalPlayer.CharacterAdded:Connect(function()
+        ping = services['Players'].LocalPlayer:GetNetworkPing()
+        wait(ping)
+        do
+            whenyoudie()
+        end
+        if flags['combat/autorespawn'] then
+            firetouchinterest(services['Players'].LocalPlayer.Character.HumanoidRootPart, workspace.Portals["Arena Frame"].Portal, 1)
+            task.wait(ping) -- agern
+            --services['Players'].LocalPlayer.Character.HumanoidRootPart.CFrame = ogCFrame -- Disabled because if you die in the void, or in another dimension, you will basically be in a loop forever
+        end
+    end)
+    services['Players'].PlayerAdded:Connect(function(v)
+        if table.find(modlist, v.UserId) and flags['pvpsettings/staff'] then
+            services['Players'].LocalPlayer:Kick("\nKOMARU HUB ANTI MOD\n\t" .. v.Name .. "\t")
+        end
+    end)
+    workspace.ChildAdded:Connect(function(v)
+        if v.Name:lower():find('portal') and v.Name ~= "Portal Facility" and v.Name ~= "Portals" and not table.find(portalsalreadydone, v) then
+            table.insert(portalsalreadydone, v)
+            for ii, touch in v:GetDescendants() do
+                if v:IsA("TouchTransmitter") or v.Name == "TouchInterest" then
+                    v:Destroy()
+                end
+            end
+        end
+    end)
+
+    whenyoudie()
+end
+
+return(function(a,b)
+    (a or function()
+    end)(b or 'nil')
+end)(print, 'Made by altered/apnff0x')
