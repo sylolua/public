@@ -1,0 +1,120 @@
+local autoFarming = false
+local flySpeed = 390.45
+local flyDuration = 21
+local centerPosition = Vector3.new(0, 100, 0)
+local chestPosition = Vector3.new(15, -5, 9495)
+local secondGui
+local bodyVelocity
+local player = game.Players.LocalPlayer
+local totalCoins = 0
+local antiAFKEnabled = false
+
+-- Auto Farm GUI
+secondGui = Instance.new("ScreenGui", game.CoreGui)
+local Frame = Instance.new("Frame", secondGui)
+Frame.Size = UDim2.new(0, 300, 0, 250)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -125)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Active = true
+
+local dragging, dragInput, dragStart, startPos
+Frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = Frame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+Frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+local ToggleButton = Instance.new("TextButton", Frame)
+ToggleButton.Text = "Start Auto Farm"
+ToggleButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+ToggleButton.Position = UDim2.new(0.1, 0, 0.4, 0)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+local CoinsLabel = Instance.new("TextLabel", Frame)
+CoinsLabel.Size = UDim2.new(1, 0, 0.2, 0)
+CoinsLabel.Position = UDim2.new(0, 0, 0.1, 0)
+CoinsLabel.Text = "Coins: 0"
+CoinsLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+CoinsLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+CoinsLabel.Font = Enum.Font.GothamBold
+CoinsLabel.TextSize = 16
+
+ToggleButton.MouseButton1Click:Connect(function()
+    autoFarming = not autoFarming
+    ToggleButton.Text = autoFarming and "Stop Auto Farm" or "Start Auto Farm"
+    if autoFarming then
+        startAutoFarm(CoinsLabel)
+    else
+        stopFlying()
+        teleportToTeamBase()
+    end
+end)
+
+function startAutoFarm(CoinsLabel)
+    spawn(function()
+        while autoFarming do
+            local character = player.Character or player.CharacterAdded:Wait()
+            local hrp = character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                hrp.CFrame = CFrame.new(centerPosition)
+                enableNoclip(character)
+                bodyVelocity = Instance.new("BodyVelocity")
+                bodyVelocity.MaxForce = Vector3.new(10000, 10000, 10000)
+                bodyVelocity.Velocity = Vector3.new(0, 0, flySpeed)
+                bodyVelocity.Parent = hrp
+                wait(flyDuration)
+                if bodyVelocity then bodyVelocity:Destroy() end
+                hrp.CFrame = CFrame.new(chestPosition)
+                character:BreakJoints()
+                if totalCoins < 10000000 then
+                    totalCoins = totalCoins + 100
+                    CoinsLabel.Text = "Coins: " .. totalCoins
+                end
+                wait(9)
+            end
+        end
+    end)
+end
+
+function stopFlying()
+    if bodyVelocity then
+        bodyVelocity:Destroy()
+    end
+end
+
+function teleportToTeamBase()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local hrp = character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        local teamBasePosition = Vector3.new(0, 10, 0)
+        hrp.CFrame = CFrame.new(teamBasePosition)
+    end
+end
+
+function enableNoclip(character)
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = false
+        end
+    end
+end
