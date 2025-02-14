@@ -1,0 +1,368 @@
+do
+    local placeId = game.PlaceId
+    local allowedPlaceId = 8260276694
+    if (placeId ~= allowedPlaceId) then
+        return
+    end
+    local ProtectGui = protectgui or (syn and syn.protect_gui) or function(gui)
+            if gui then
+                if syn then
+                    syn.protect_gui(gui)
+                end
+            end
+        end
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+    local Humanoid = Character:WaitForChild("Humanoid")
+    local function updateCharacterReferences()
+        local newCharacter = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
+        Humanoid = newCharacter:WaitForChild("Humanoid")
+    end
+    LocalPlayer.CharacterAdded:Connect(
+        function()
+            updateCharacterReferences()
+            if Humanoid then
+                Humanoid.Died:Connect(
+                    function()
+                        isActive = false
+                        ToggleButton.Text = "Enable"
+                        ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                        DistanceLabel.Text = "Distance: N/A"
+                        ProfilePicture.Image = ""
+                        PlayerNameLabel.Text = "Player: N/A"
+                        HealthLabel.Text = "Health: N/A"
+                    end
+                )
+            end
+        end
+    )
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.ResetOnSpawn = false
+    ProtectGui(ScreenGui)
+    local Frame = Instance.new("Frame")
+    local ToggleButton = Instance.new("TextButton")
+    local DistanceLabel = Instance.new("TextLabel")
+    local ProfilePicture = Instance.new("ImageLabel")
+    local PlayerNameLabel = Instance.new("TextLabel")
+    local HealthLabel = Instance.new("TextLabel")
+    local CloseButton = Instance.new("TextButton")
+    local CloseButtonBackground = Instance.new("Frame")
+    local OwnerHubLabel = Instance.new("TextLabel")
+    ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    Frame.Parent = ScreenGui
+    Frame.Size = UDim2.new(0, 400, 0, 350)
+    Frame.Position = UDim2.new(0.5, -200, 0.5, -150)
+    Frame.BackgroundTransparency = 0.1
+    Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    Frame.BorderSizePixel = 2
+    Frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    Frame.Active = true
+    Frame.Draggable = true
+    ToggleButton.Parent = Frame
+    ToggleButton.Size = UDim2.new(0, 120, 0, 40)
+    ToggleButton.Position = UDim2.new(0, 10, 0.8, 0)
+    ToggleButton.Text = "Follow: Off"
+    ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    ToggleButton.Font = Enum.Font.Gotham
+    ToggleButton.TextScaled = true
+    ToggleButton.BorderSizePixel = 1
+    ToggleButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    local ToggleButton2 = Instance.new("TextButton")
+    ToggleButton2.Parent = Frame
+    ToggleButton2.Size = UDim2.new(0, 120, 0, 40)
+    ToggleButton2.Position = UDim2.new(1, -130, 0.8, 0)
+    ToggleButton2.Text = "Punch Aura: Off"
+    ToggleButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleButton2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    ToggleButton2.Font = Enum.Font.Gotham
+    ToggleButton2.TextScaled = true
+    ToggleButton2.BorderSizePixel = 1
+    ToggleButton2.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    DistanceLabel.Parent = Frame
+    DistanceLabel.Size = UDim2.new(0, 300, 0, 30)
+    DistanceLabel.Position = UDim2.new(0.5, -150, 0.2, 0)
+    DistanceLabel.BackgroundTransparency = 0
+    DistanceLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    DistanceLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DistanceLabel.TextScaled = true
+    DistanceLabel.Text = "Distance: N/A"
+    DistanceLabel.Font = Enum.Font.Gotham
+    DistanceLabel.BorderSizePixel = 1
+    DistanceLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    ProfilePicture.Parent = Frame
+    ProfilePicture.Size = UDim2.new(0, 85, 0, 85)
+    ProfilePicture.Position = UDim2.new(0.5, -50, 0.55, 0)
+    ProfilePicture.BackgroundTransparency = 1
+    PlayerNameLabel.Parent = Frame
+    PlayerNameLabel.Size = UDim2.new(0, 300, 0, 30)
+    PlayerNameLabel.Position = UDim2.new(0.5, -150, 0.3, 10)
+    PlayerNameLabel.BackgroundTransparency = 0
+    PlayerNameLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    PlayerNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    PlayerNameLabel.TextScaled = true
+    PlayerNameLabel.Text = "Name: N/A"
+    PlayerNameLabel.Font = Enum.Font.Gotham
+    PlayerNameLabel.BorderSizePixel = 1
+    PlayerNameLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    HealthLabel.Parent = Frame
+    HealthLabel.Size = UDim2.new(0, 300, 0, 30)
+    HealthLabel.Position = UDim2.new(0.5, -150, 0.4, 20)
+    HealthLabel.BackgroundTransparency = 0
+    HealthLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    HealthLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    HealthLabel.TextScaled = true
+    HealthLabel.Text = "Health: N/A"
+    HealthLabel.Font = Enum.Font.Gotham
+    HealthLabel.BorderSizePixel = 1
+    HealthLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButtonBackground.Parent = Frame
+    CloseButtonBackground.Size = UDim2.new(0, 30, 0, 30)
+    CloseButtonBackground.Position = UDim2.new(1, -35, 0, 5)
+    CloseButtonBackground.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    CloseButtonBackground.BorderSizePixel = 1
+    CloseButtonBackground.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.Parent = CloseButtonBackground
+    CloseButton.Size = UDim2.new(1, 0, 1, 0)
+    CloseButton.Text = "X"
+    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.BackgroundTransparency = 1
+    CloseButton.Font = Enum.Font.Gotham
+    CloseButton.TextScaled = true
+    CloseButton.MouseButton1Click:Connect(
+        function()
+            ScreenGui:Destroy()
+        end
+    )
+    OwnerHubLabel.Parent = Frame
+    OwnerHubLabel.Size = UDim2.new(0, 300, 0, 20)
+    OwnerHubLabel.Position = UDim2.new(0.5, -150, 0, 10)
+    OwnerHubLabel.BackgroundTransparency = 1
+    OwnerHubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    OwnerHubLabel.TextScaled = true
+    OwnerHubLabel.Font = Enum.Font.Gotham
+    local RunService = game:GetService("RunService")
+    local fpsLabelUpdateRate = 1
+    local lastFrameTime = tick()
+    local frameCount = 0
+    local fps = 0
+    local function updateFPS()
+        frameCount = frameCount + 1
+        local currentTime = tick()
+        local deltaTime = currentTime - lastFrameTime
+        if (deltaTime >= fpsLabelUpdateRate) then
+            fps = frameCount / deltaTime
+            lastFrameTime = currentTime
+            frameCount = 0
+            OwnerHubLabel.Text = "Owner Nozer Hub | FPS: " .. math.floor(fps)
+        end
+    end
+    local SubTitleLabel = Instance.new("TextLabel")
+    SubTitleLabel.Parent = Frame
+    SubTitleLabel.Size = UDim2.new(0, 300, 0, 20)
+    SubTitleLabel.Position = UDim2.new(0.5, -150, 0, 35)
+    SubTitleLabel.BackgroundTransparency = 0
+    SubTitleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+    SubTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SubTitleLabel.TextScaled = true
+    SubTitleLabel.Font = Enum.Font.Gotham
+    SubTitleLabel.BorderSizePixel = 1
+    SubTitleLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+    local placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    SubTitleLabel.Text = "Game: " .. placeName
+    RunService.RenderStepped:Connect(updateFPS)
+    local function getNearestPlayer()
+        local nearestPlayer = nil
+        local shortestDistance = math.huge
+        for _, player in pairs(Players:GetPlayers()) do
+            if ((player ~= LocalPlayer) and player.Character and player.Character:FindFirstChild("HumanoidRootPart")) then
+                local distance = (player.Character.HumanoidRootPart.Position - HumanoidRootPart.Position).Magnitude
+                if (distance < shortestDistance) then
+                    shortestDistance = distance
+                    nearestPlayer = player
+                end
+            end
+        end
+        return nearestPlayer, shortestDistance
+    end
+    local lastTargetPlayer = nil
+    local function createESP(targetPlayer)
+        local esp = Instance.new("Highlight")
+        esp.Name = targetPlayer.Name
+        esp.FillTransparency = 0.5
+        esp.FillColor = Color3.new(0, 0, 0)
+        esp.OutlineColor = Color3.new(255, 255, 255)
+        esp.OutlineTransparency = 0
+        esp.Parent = targetPlayer.Character
+    end
+    local function removeESP(targetPlayer)
+        if (targetPlayer.Character and targetPlayer.Character:FindFirstChild(targetPlayer.Name)) then
+            local esp = targetPlayer.Character:FindFirstChild(targetPlayer.Name)
+            if esp then
+                esp:Destroy()
+            end
+        end
+    end
+    local function updateTargetPlayerESP(targetPlayer)
+        if lastTargetPlayer then
+            removeESP(lastTargetPlayer)
+        end
+        if targetPlayer then
+            createESP(targetPlayer)
+        end
+        lastTargetPlayer = targetPlayer
+    end
+    local isActive = false
+    local activeCoroutine
+    local function initializeCharacter()
+        updateCharacterReferences()
+        if Humanoid then
+            Humanoid.Died:Connect(
+                function()
+                    isActive = false
+                    ToggleButton.Text = "Enable"
+                    ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                    DistanceLabel.Text = "Distance: N/A"
+                    ProfilePicture.Image = ""
+                    PlayerNameLabel.Text = "Player: N/A"
+                    HealthLabel.Text = "Health: N/A"
+                end
+            )
+        end
+    end
+    local isPunchAuraActive = false
+    local punchAuraCoroutine
+    local isActive = false
+    local activeCoroutine
+    local function resetPunchAura()
+        isPunchAuraActive = false
+        ToggleButton2.Text = "Punch Aura: Off"
+        ToggleButton2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        if punchAuraCoroutine then
+            task.cancel(punchAuraCoroutine)
+        end
+    end
+    local function initializeCharacter()
+        game.Players.LocalPlayer.CharacterAdded:Connect(
+            function()
+                resetPunchAura()
+            end
+        )
+    end
+    initializeCharacter()
+    ToggleButton2.MouseButton1Click:Connect(
+        function()
+            isPunchAuraActive = not isPunchAuraActive
+            if isPunchAuraActive then
+                ToggleButton2.Text = "Punch Aura: On"
+                ToggleButton2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+                punchAuraCoroutine =
+                    task.spawn(
+                    function()
+                        while isPunchAuraActive do
+                            for i, v in pairs(game.Players:GetChildren()) do
+                                if
+                                    ((v ~= game.Players.LocalPlayer) and
+                                        game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and
+                                        v.Character)
+                                 then
+                                    if v.Character:FindFirstChild("HumanoidRootPart") then
+                                        if
+                                            ((v.Character["Right Arm"]:FindFirstChild("SelectionBox") == nil) and
+                                                (v.Character:FindFirstChild("Highlight") == nil))
+                                         then
+                                            local Magnitude =
+                                                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position -
+                                                v.Character.HumanoidRootPart.Position).Magnitude
+                                            if (10 >= Magnitude) then
+                                                game:GetService("ReplicatedStorage"):FindFirstChild("Remote Events").Punch:FireServer(
+                                                    v.Character,
+                                                    Vector3.new,
+                                                    0,
+                                                    v.Character:FindFirstChild("Head")
+                                                )
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            wait(0.5)
+                        end
+                    end
+                )
+            else
+                ToggleButton2.Text = "Punch Aura: Off"
+                ToggleButton2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                if punchAuraCoroutine then
+                    task.cancel(punchAuraCoroutine)
+                end
+            end
+        end
+    )
+    ToggleButton.MouseButton1Click:Connect(
+        function()
+            isActive = not isActive
+            if isActive then
+                ToggleButton.Text = "Follow: On"
+                ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+                activeCoroutine =
+                    task.spawn(
+                    function()
+                        while isActive do
+                            local targetPlayer, distance = getNearestPlayer()
+                            if
+                                (targetPlayer and targetPlayer.Character and
+                                    targetPlayer.Character:FindFirstChild("HumanoidRootPart"))
+                             then
+                                DistanceLabel.Text = string.format("Distance: %.2f", distance)
+                                local userId = targetPlayer.UserId
+                                ProfilePicture.Image =
+                                    "https://www.roblox.com/headshot-thumbnail/image?userId=" ..
+                                    userId .. "&width=420&height=420&format=png"
+                                PlayerNameLabel.Text = "Name: " .. targetPlayer.Name
+                                if targetPlayer.Character:FindFirstChild("Humanoid") then
+                                    local targetHumanoid = targetPlayer.Character.Humanoid
+                                    HealthLabel.Text =
+                                        string.format(
+                                        "Health: %.0f / %.0f",
+                                        targetHumanoid.Health,
+                                        targetHumanoid.MaxHealth
+                                    )
+                                end
+                                Humanoid:MoveTo(targetPlayer.Character.HumanoidRootPart.Position)
+                                updateTargetPlayerESP(targetPlayer)
+                            else
+                                DistanceLabel.Text = "Distance: N/A"
+                                ProfilePicture.Image = ""
+                                PlayerNameLabel.Text = "Name: N/A"
+                                HealthLabel.Text = "Health: N/A"
+                                removeESP(targetPlayer)
+                            end
+                            wait(0.1)
+                        end
+                    end
+                )
+            else
+                ToggleButton.Text = "Follow: Off"
+                ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                if activeCoroutine then
+                    task.cancel(activeCoroutine)
+                end
+                DistanceLabel.Text = "Distance: N/A"
+                ProfilePicture.Image = ""
+                PlayerNameLabel.Text = "Name: N/A"
+                HealthLabel.Text = "Health: N/A"
+                if Humanoid then
+                    Humanoid:MoveTo(HumanoidRootPart.Position)
+                end
+                if lastTargetPlayer then
+                    removeESP(lastTargetPlayer)
+                end
+            end
+        end
+    )
+end
