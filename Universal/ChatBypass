@@ -1,0 +1,244 @@
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+local TextFrame = Instance.new("Frame")
+local MessageBox = Instance.new("TextBox")
+local UICorner = Instance.new("UICorner")
+local SendButton = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local ClearButton = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local RbxButton = Instance.new("ImageButton")
+local UICorner_4 = Instance.new("UICorner")
+local PreButton = Instance.new("ImageButton")
+local UICorner_5 = Instance.new("UICorner")
+local VerButton = Instance.new("ImageButton")
+local UICorner_6 = Instance.new("UICorner")
+local CloseButton = Instance.new("TextButton")
+local creditlabel = Instance.new("TextLabel")
+
+creditlabel.Name = "creditlabel"
+creditlabel.Parent = TextLabel 
+creditlabel.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+creditlabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+creditlabel.Position = UDim2.new(0, 0, 8.64529991, 0)
+creditlabel.Size = UDim2.new(0, 396, 0, 30)
+creditlabel.Font = Enum.Font.FredokaOne
+creditlabel.Text = "Made By @Tttagjgjgj"
+creditlabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+creditlabel.TextSize = 14.000
+creditlabel.TextStrokeTransparency = 0.000
+creditlabel.TextWrapped = true
+
+local cloneref = cloneref or function(Service) return Service end
+
+local Players = cloneref(game:GetService("Players"))
+local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+local TextChatService = cloneref(game:GetService("TextChatService"))
+
+local CoreGui = cloneref(game:GetService("CoreGui"))
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local isLegacyChat = TextChatService.ChatVersion == Enum.ChatVersion.LegacyChatService
+
+ScreenGui.Parent = CoreGui or PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+TextLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.Position = UDim2.new(0.303571433, 0, 0.47863248, 0)
+TextLabel.Size = UDim2.new(0, 396, 0, 30)
+TextLabel.Font = Enum.Font.FredokaOne
+TextLabel.Text = "Chat Bypasser & Icon Sender"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 14.000
+TextLabel.TextStrokeTransparency = 0.000
+TextLabel.TextWrapped = true
+
+TextFrame.Name = "TextFrame"
+TextFrame.Parent = TextLabel
+TextFrame.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+TextFrame.BorderColor3 = Color3.fromRGB(255, 255, 255)
+TextFrame.Position = UDim2.new(0, 0, 1, 0)
+TextFrame.Size = UDim2.new(0, 396, 0, 230)
+
+MessageBox.Name = "MessageBox"
+MessageBox.Parent = TextFrame
+MessageBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+MessageBox.BorderColor3 = Color3.fromRGB(255, 255, 255)
+MessageBox.Position = UDim2.new(0.0404040404, 0, 0.0782608688, 0)
+MessageBox.Size = UDim2.new(0, 363, 0, 104)
+MessageBox.ClearTextOnFocus = false
+MessageBox.Font = Enum.Font.SourceSans
+MessageBox.PlaceholderText = "message here"
+MessageBox.Text = ""
+MessageBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+MessageBox.TextSize = 14.000
+MessageBox.TextWrapped = true
+MessageBox.TextXAlignment = Enum.TextXAlignment.Left
+MessageBox.TextYAlignment = Enum.TextYAlignment.Top
+
+UICorner.Parent = MessageBox
+
+SendButton.Name = "SendButton"
+SendButton.Parent = TextFrame
+SendButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+SendButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+SendButton.BorderSizePixel = 0
+SendButton.Position = UDim2.new(0.0396827161, 0, 0.774172843, 0)
+SendButton.Size = UDim2.new(0, 174, 0, 34)
+SendButton.Font = Enum.Font.FredokaOne
+SendButton.Text = "Send"
+SendButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SendButton.TextSize = 14.000
+SendButton.TextStrokeTransparency = 0.000
+
+UICorner_2.Parent = SendButton
+
+ClearButton.Name = "ClearButton"
+ClearButton.Parent = TextFrame
+ClearButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+ClearButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ClearButton.BorderSizePixel = 0
+ClearButton.Position = UDim2.new(0.516955435, 0, 0.774172843, 0)
+ClearButton.Size = UDim2.new(0, 174, 0, 34)
+ClearButton.Font = Enum.Font.FredokaOne
+ClearButton.Text = "Clear"
+ClearButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearButton.TextSize = 14.000
+ClearButton.TextStrokeTransparency = 0.000
+
+UICorner_3.Parent = ClearButton
+
+RbxButton.Name = "RbxButton"
+RbxButton.Parent = TextFrame
+RbxButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+RbxButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+RbxButton.BorderSizePixel = 0
+RbxButton.Position = UDim2.new(0.454274893, 0, 0.576634169, 0)
+RbxButton.Size = UDim2.new(0, 35, 0, 35)
+RbxButton.Image = "rbxassetid://13885942899"
+
+UICorner_4.Parent = RbxButton
+
+PreButton.Name = "PreButton"
+PreButton.Parent = TextFrame
+PreButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+PreButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+PreButton.BorderSizePixel = 0
+PreButton.Position = UDim2.new(0.213023096, 0, 0.576634169, 0)
+PreButton.Size = UDim2.new(0, 35, 0, 35)
+PreButton.Image = "rbxassetid://11896468087"
+
+UICorner_5.Parent = PreButton
+
+VerButton.Name = "VerButton"
+VerButton.Parent = TextFrame
+VerButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+VerButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+VerButton.BorderSizePixel = 0
+VerButton.Position = UDim2.new(0.691287875, 0, 0.576634169, 0)
+VerButton.Size = UDim2.new(0, 35, 0, 35)
+VerButton.Image = "rbxassetid://17072141175"
+
+UICorner_6.Parent = VerButton
+
+CloseButton.Name = "CloseButton"
+CloseButton.Parent = TextLabel
+CloseButton.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+CloseButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Position = UDim2.new(0.926767647, 0, 0, 0)
+CloseButton.Size = UDim2.new(0, 29, 0, 29)
+CloseButton.Font = Enum.Font.SourceSans
+CloseButton.Text = "x"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.TextScaled = true
+CloseButton.TextSize = 14.000
+CloseButton.TextWrapped = true
+
+local function DAPW_fake_script()
+	local script = Instance.new('LocalScript', TextFrame)
+
+	local TextChatService = game:GetService("TextChatService")
+
+	local screenGui = script.Parent
+	local textBox = screenGui:WaitForChild("MessageBox")
+	local textButton = screenGui:WaitForChild("SendButton")
+	local textButton2 = screenGui:WaitForChild("ClearButton")
+	local imageButton1 = screenGui:WaitForChild("VerButton")
+	local imageButton2 = screenGui:WaitForChild("PreButton")
+	local imageButton3 = screenGui:WaitForChild("RbxButton")
+
+	imageButton1.MouseButton1Click:Connect(function()
+		textBox.Text = textBox.Text .. ""
+	end)
+
+	imageButton2.MouseButton1Click:Connect(function()
+		textBox.Text = textBox.Text .. ""
+	end)
+
+	imageButton3.MouseButton1Click:Connect(function()
+		textBox.Text = textBox.Text .. ""
+	end)
+
+	local function sendMessage()
+		local message = textBox.Text
+		if message ~= "" then
+			local formattedText = message
+			formattedText = formattedText:gsub("/ver/", "")
+			formattedText = formattedText:gsub("/pre/", "")
+			formattedText = formattedText:gsub("/rbx/", "")
+
+			task.wait()
+
+			local function SendMessageToChat(String)
+				for _, Object in pairs(game:GetDescendants()) do
+					if Object:IsA("RemoteEvent") and string.find(string.lower(Object.Name), "chat") then
+						Object:FireServer(String)
+					end
+					if Object:IsA("RemoteFunction") and string.find(string.lower(Object.Name), "chat") then
+						Object:InvokeServer(String)
+					end
+				end
+
+				if not isLegacyChat then
+					TextChatService.TextChannels.RBXGeneral:SendAsync(String)
+				else
+					ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(String, "All")
+				end
+			end
+
+			SendMessageToChat(formattedText)
+		end
+	end
+
+	textButton.MouseButton1Click:Connect(sendMessage)
+
+	textBox.FocusLost:Connect(function(enterPressed)
+		if enterPressed then
+			sendMessage()
+		end
+	end)
+
+	textButton2.MouseButton1Click:Connect(function()
+		textBox.Text = ""
+	end)
+end
+coroutine.wrap(DAPW_fake_script)()
+local function UZLPRH_fake_script()
+	local script = Instance.new('LocalScript', CloseButton)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Visible = false
+	end)
+end
+coroutine.wrap(UZLPRH_fake_script)()
+local function EPZXV_fake_script() 
+	local script = Instance.new('LocalScript', TextLabel)
+
+	script.Parent.Active = true
+	script.Parent.Draggable = true
+end
+coroutine.wrap(EPZXV_fake_script)()
