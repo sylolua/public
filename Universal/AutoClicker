@@ -1,0 +1,58 @@
+local time = 0.01
+local click = false
+local player = game.Players.LocalPlayer
+local m = player:GetMouse()
+
+-- GUI Setup
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local NoteLabel = Instance.new("TextLabel")
+
+ScreenGui.Parent = game.CoreGui
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Position = UDim2.new(0.5, -75, 0, 10) -- Centered at the top
+Frame.Size = UDim2.new(0, 150, 0, 80)
+Frame.BorderSizePixel = 2
+Frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+ToggleButton.Parent = Frame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+ToggleButton.Position = UDim2.new(0, 10, 0, 30)
+ToggleButton.Size = UDim2.new(0, 130, 0, 40)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.Text = "AutoClick: OFF"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.TextSize = 16
+
+NoteLabel.Parent = Frame
+NoteLabel.BackgroundTransparency = 1
+NoteLabel.Position = UDim2.new(0, 10, 0, 5)
+NoteLabel.Size = UDim2.new(0, 130, 0, 20)
+NoteLabel.Font = Enum.Font.SourceSans
+NoteLabel.Text = "Press V to toggle"
+NoteLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoteLabel.TextSize = 14
+
+-- Function to toggle auto clicker
+local function ToggleAutoClicker()
+    click = not click
+    ToggleButton.Text = click and "AutoClick: ON" or "AutoClick: OFF"
+
+    while click do
+        wait(time)
+        mouse1click()
+    end
+end
+
+-- Toggle with GUI button
+ToggleButton.MouseButton1Click:Connect(ToggleAutoClicker)
+
+-- Toggle with "V" key
+m.KeyDown:Connect(function(key)
+    if key == "v" then
+        ToggleAutoClicker()
+    end
+end)
