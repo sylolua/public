@@ -1,0 +1,24 @@
+-- have fun skidding this @jakefromjakesfarm 
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+local backpack = localPlayer.Backpack
+local mouse = localPlayer:GetMouse()
+
+local function isAlive(Player, headCheck)
+    local Player = Player or localPlayer
+    if Player and Player.Character and ((Player.Character:FindFirstChildOfClass("Humanoid")) and (Player.Character:FindFirstChild("HumanoidRootPart")) and (headCheck and Player.Character:FindFirstChild("Head") or not headCheck)) then
+        return true
+    else
+        return false
+    end
+end
+
+local tool = Instance.new("Tool")
+tool.Name = "TPTool"
+tool.Parent = backpack
+tool.RequiresHandle = false
+tool.Activated:Connect(function()
+	if isAlive() then
+		localPlayer.Character.HumanoidRootPart.CFrame = mouse.Hit + Vector3.new(0, 3, 0)
+	end
+end)
